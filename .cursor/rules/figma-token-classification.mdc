@@ -1,0 +1,24 @@
+---
+description: Classify token mappings before binding Figma component values
+alwaysApply: true
+---
+
+# Figma Token Classification
+
+- Before binding any tokenized component property, classify each required token as:
+  - `exact`
+  - `substitute`
+  - `missing`
+  - `unsafe`
+- Do not bind by loose name similarity alone.
+- Distinguish "token exists" from "token is semantically correct".
+- For multi-mode color collections, verify mappings across every required mode before finishing.
+- If a required token is `missing` or `unsafe`, stop or explicitly report the fallback decision.
+- A `substitute` is allowed only when it preserves the same semantic role, remains correct in every required mode, and is the single clearly safest local choice.
+- When a `substitute` is used, explicitly report:
+  - the original code token
+  - the chosen Figma token or fallback treatment
+  - why the substitute is safe
+  - whether the substitute depends on opacity or another non-token adjustment
+- If semantic text tiers such as secondary, tertiary, placeholder, or disabled text are collapsed into a shared local token, do not silently treat that as `exact`.
+- If the safest available substitute changes semantic emphasis by relying on opacity, detached restyling, or local overrides, treat that mapping as `substitute` and include QA evidence or escalate with `AskQuestion`.

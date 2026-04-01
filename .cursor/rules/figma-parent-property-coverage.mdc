@@ -1,0 +1,9 @@
+---
+description: Require parent component properties for optional composed regions in Figma
+alwaysApply: false
+---
+
+# Figma Parent Property Coverage
+
+- Canonical parent property coverage now lives in `figma-content-slot-detection`.
+- Use this note only when auditing a composed parent for missing `BOOLEAN`, `TEXT`, or `INSTANCE_SWAP` exposure.

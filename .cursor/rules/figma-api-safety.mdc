@@ -1,0 +1,15 @@
+---
+description: Use safe Figma Plugin API patterns for bindings and component properties
+alwaysApply: true
+---
+
+# Figma API Safety
+
+- Do not assume component-property reference keys from display names.
+- Resolve the actual property key after property creation, then wire child references to that key.
+- Use API-safe variable-binding patterns:
+  - use the expected variable ID/object for that exact API path
+  - reassign the full paint array after paint binding
+- Reuse or create deterministic effect styles when effect semantics are part of the code contract; do not finish with ad hoc local effects as the final representation.
+- On `use_figma` write error, stop and fix the script before retrying.
+- When rerunning a component workflow, reuse existing pages, component sets, and exact-match variants before creating new nodes.

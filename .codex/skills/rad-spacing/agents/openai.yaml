@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rad Spacing [rad-spacing]"
+  short_description: "Apply hierarchical spacing in Figma using Gestalt proximity with consistent 8px/4px increments."
+  default_prompt: "Use $rad-spacing to apply consistent hierarchical spacing to this Figma screen, leveraging existing library spacing variables when possible and otherwise creating the needed variables."

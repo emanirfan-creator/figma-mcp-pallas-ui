@@ -1,0 +1,22 @@
+---
+description: Require semantic QA and completion checks for Figma component workflows
+alwaysApply: true
+---
+
+# Figma QA And Completion
+
+- This is the canonical completion and testing rule.
+- Do not mark a Figma component complete after structure/layout validation alone.
+- Do not mark work complete until both authoring-page acceptance and testing-page QA pass.
+- Keep QA artifacts on testing pages, not authoring pages, and append new QA frames instead of replacing history.
+- For tokenized components, require structural validation, screenshot validation, and semantic token validation before completion.
+- For multi-mode work, require at least one screenshot of a live component instance in every required mode.
+- Do not treat detached, manually restyled, or fallback artifacts as primary proof for mode correctness.
+- If dark-mode readability depends on placeholder, secondary, tertiary, disabled text, or slot-backed visuals, verify those semantics on live instances before completion.
+- If live-instance QA fails in any required mode, completion is blocked unless:
+  - the issue is fixed, or
+  - the unresolved surface is explicitly reported with preserved failing proof and a clearly labeled fallback artifact
+- Before finishing, confirm:
+  - authoring-page checks passed
+  - testing-page QA exists for all required modes
+  - no mandatory QA step remains unresolved

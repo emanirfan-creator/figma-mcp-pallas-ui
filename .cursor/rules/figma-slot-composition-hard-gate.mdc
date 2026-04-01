@@ -1,0 +1,31 @@
+---
+description: Hard gate for reusable slot composition in Figma component work
+alwaysApply: true
+---
+
+# Figma Slot Composition Hard Gate
+
+- This is the canonical composition rule for reusable child components and code-backed parent assembly.
+- Before building the parent, inspect the code contract and identify:
+  - the parent or molecule component
+  - atomic child components
+  - reusable visual slots such as `icon`, `spinner`, `avatar`, `badge`, `trigger`, or `item`
+  - local fragments with no reusable contract
+- Treat reusable visual props as `atomic-child-component` by default unless the code clearly proves they are local fragments.
+- Build order:
+  1. audit reusable children in code
+  2. audit matching children in Figma
+  3. reuse matching children when they satisfy the contract
+  4. create or upsert missing or stale children first
+  5. compose the parent from those child instances or instance-swap contracts
+- Keep true child axes on the child and true parent axes on the parent.
+- Add required parent properties before `combineAsVariants`.
+- Prefer `INSTANCE_SWAP` when the parent contract is swap-driven; prefer child instances when the nested piece has its own reusable contract.
+- Do not ship loose vectors, ad hoc frames, or baked copies when the code contract implies a reusable child.
+- If the parent is already combined and the correct child/property model cannot be added safely, rebuild the parent rather than patching around it.
+- Preflight must explicitly record:
+  - `codeAtomicChildrenFound`
+  - `existingFigmaAtomicChildren`
+  - `atomicChildrenToCreateFirst`
+  - `atomicChildrenToReuse`
+  - `parentBuiltFrom`

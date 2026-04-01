@@ -1,0 +1,9 @@
+---
+description: Require live-instance mode QA for tokenized Figma components
+alwaysApply: false
+---
+
+# Figma Live Mode QA
+
+- Canonical live-mode completion policy now lives in `figma-qa-completion`.
+- Use this note only when a focused dark-mode semantic pass is needed.

@@ -1,0 +1,41 @@
+---
+description: Conservative detection of true Figma content slots before component-library writes
+alwaysApply: true
+---
+
+# Figma Content Slot Detection
+
+- This is the canonical modeling rule for usage, slots, and parent property coverage.
+- Derive the Figma structure from real usage, not from the fullest example.
+- Before the first write, answer:
+  - what is the smallest valid real-world instance
+  - which regions are optional companions
+  - which regions always appear together
+  - whether designers normally start from the molecule or from atoms
+- Classify every candidate region as exactly one of:
+  - `content-slot`
+  - `atomic-child-component`
+  - `property-driven-region`
+  - `local-fragment`
+  - `fixed-shell-structure`
+- A `content-slot` is only for a consumer-editable region inside a stable shell whose content varies by composition, not merely by value, visibility, or swaps.
+- A guided composition region is appropriate when designers start from the parent, repeated approved children need to grow or reorder, and atoms-only modeling would create detachment pressure.
+- Prefer `property-driven-region` when the content is predictable and bounded:
+  - `BOOLEAN` for visibility
+  - `TEXT` for scalar copy
+  - `INSTANCE_SWAP` for a fixed swappable child position
+  - `VARIANT` for true stable visual axes
+- Treat field-like companion regions such as `label`, `description`, `helper`, `message`, `hint`, and `error` as optional unless code clearly proves they are mandatory.
+- If a companion region is optional in real usage, require matching parent property coverage before completion.
+- Never classify decorative chrome, icons, chevrons, checkmarks, close affordances, or other small adornments as `content-slot` unless the contract clearly proves consumer-edited content there.
+- Default uncertain regions to not-a-slot and escalate with `AskQuestion`.
+- If a region is ambiguous, ask exactly:
+  - `Should [area name] be strict (property) or flexible (slot)?`
+  - `For example: [give a concrete use case for each option]`
+- If overall structure is ambiguous, ask exactly:
+  - `Should [component name] be atoms-first or a guided parent molecule?`
+  - `For example: [show one designer workflow for each option]`
+- Hard gate:
+  - do not write while any region is unclassified
+  - do not choose the maximal example when realistic usage omits companion regions
+  - do not accept a structure that requires detaching or manual layer hiding for normal use

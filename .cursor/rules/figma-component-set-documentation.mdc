@@ -1,0 +1,28 @@
+---
+description: Keep component-set shells visible and documented
+alwaysApply: true
+---
+
+# Figma Component Set Presentation
+
+- This is the canonical authoring and documentation rule.
+- After `combineAsVariants`, reflow the `ComponentSetNode` children into a readable grid. Do not leave them stacked at `0,0`.
+- Resize the `ComponentSetNode` to the furthest child bounds after reflow.
+- Wrap documented content in a real presentation shell with intentional surface treatment and enough padding to fully expose the grid.
+- Choose the shell layout model before writing:
+  - `fixed-position shell` for labeled grids, aligned headers, or mixed manual sections
+  - `auto-layout shell` only for truly linear documentation
+- Keep labels inside the shell, use readable variant labels, and place row labels to the left for row-based layouts.
+- Default geometry unless the contract requires otherwise:
+  - shell padding `24px`
+  - row gap `16px`
+  - item gap `8px` minimum
+  - left label column `120px` minimum
+  - gap from label column to first item `16px`
+- Preserve readability for atomic child previews by choosing an intentional preview surface during preflight.
+- Before completion, validate the authoring page with both metadata and screenshot checks:
+  - component-set bounds cover the laid-out variants
+  - docs shell hugs measured content plus intended padding
+  - top-level authoring artifacts do not overlap
+  - documented child sections remain readable
+- If the docs shell looks correct but the underlying component set is stacked, clipped, or collapsed, treat the work as failed.

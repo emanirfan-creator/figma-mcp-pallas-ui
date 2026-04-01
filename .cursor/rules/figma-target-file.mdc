@@ -1,0 +1,12 @@
+---
+description: Require Figma component canvas work to target the Figma MCP Testing file
+alwaysApply: true
+---
+
+# Figma Target File
+
+- All components carried to the Figma canvas in this project must be created or updated in the `Figma MCP Testing` file.
+- Use this file as the target:
+  - `https://www.figma.com/design/nPIzAMiRIezs04KU8kxrTF/Figma-MCP-Testing?node-id=0-1&t=S1gcyCuYVErJDrRB-1`
+- Treat file key `nPIzAMiRIezs04KU8kxrTF` as the default target unless the user explicitly overrides it.
+- If a request appears to target a different file and the user has not clearly approved that change, pause and ask with `AskQuestion`.

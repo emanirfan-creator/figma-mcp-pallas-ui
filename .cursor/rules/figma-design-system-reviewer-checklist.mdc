@@ -1,0 +1,29 @@
+---
+description: Review authored Figma components for design-system quality, not just visual similarity
+alwaysApply: true
+---
+
+# Figma Design-System Reviewer Checklist
+
+- Apply this rule for Figma component-library, component-canvas, and design-system component work.
+- Run a reviewer-style checklist before marking the component complete.
+- Treat this as a design-system quality pass, not a screenshot-fidelity pass.
+
+- Review these categories as explicit pass/fail judgments:
+  - `Structure fidelity`
+  - `Composition fidelity`
+  - `Slot and property correctness`
+  - `Variant discipline`
+  - `Documentation quality`
+  - `Authoring-page quality`
+  - `QA and testing completeness`
+  - `Reuse and extensibility`
+- Use the canonical rules as the source of truth:
+  - preflight: `figma-preflight-required`
+  - modeling: `figma-content-slot-detection`
+  - composition: `figma-slot-composition-hard-gate`
+  - authoring/docs: `figma-component-set-documentation`
+  - QA: `figma-qa-completion`
+- Hard gate:
+  - if any category fails, fix it or report it as a blocker
+  - do not let visual resemblance override a structural failure

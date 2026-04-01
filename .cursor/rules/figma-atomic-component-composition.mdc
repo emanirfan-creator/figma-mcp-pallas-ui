@@ -1,0 +1,10 @@
+---
+description: Build compound Figma components from atomic child components
+alwaysApply: false
+---
+
+# Figma Atomic Component Composition
+
+- Canonical composition policy now lives in `figma-slot-composition-hard-gate`.
+- Use this note only as supplemental guidance for compound families such as `Tabs`, segmented controls, menus, accordions, or steppers.
+- Mirror code composition in Figma, keep child axes on the child, and keep parent axes on the parent.

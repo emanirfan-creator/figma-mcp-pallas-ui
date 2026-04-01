@@ -1,0 +1,44 @@
+---
+description: Require read-only discovery before Figma component writes
+alwaysApply: true
+---
+
+# Figma Discovery First
+
+- Before any Figma component-library write, complete one read-only preflight.
+- Preflight owns discovery only. Use the modeling, composition, authoring, token, and QA rules for their specific policy details instead of restating them here.
+- Inspect:
+  - code source of truth
+  - existing Figma pages and component pages
+  - target component existence
+  - QA/testing pages
+  - variable collections and text styles when the component is tokenized
+- Before the first write, emit one explicit preflight summary with:
+  - `componentPurpose`
+  - `usageIntent`
+  - `realWorldUsageMatrix`
+  - `representationPattern`
+  - `stableShell`
+  - `variantAxes`
+  - `properties`
+  - `regionClassification`
+  - `atomicChildComponents`
+  - `localFragments`
+  - `documentationPlan`
+  - `qaPlan`
+  - `ambiguitiesRequiringHumanDecision`
+  - `writeBlockedUntil`
+- `documentationPlan` must include:
+  - chosen shell layout model
+  - preview surface strategy for contrast-sensitive child sections
+  - page-level placement map for top-level authoring artifacts
+- `qaPlan` must include:
+  - required live-instance checks
+  - required modes
+  - any fallback QA allowed only as secondary proof
+- If ambiguity remains after discovery, stop and use `AskQuestion` before writing.
+- Hard gate:
+  - do not write when any required field is missing
+  - do not write when any candidate region is unclassified
+  - do not write when `writeBlockedUntil` is unresolved
+  - do not reduce preflight to a visual recap; explain intended usage and realistic combinations

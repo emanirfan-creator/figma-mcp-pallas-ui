@@ -1,0 +1,9 @@
+---
+description: Block completion when authoring-page layout validation fails
+alwaysApply: false
+---
+
+# Figma Authoring Page Validation
+
+- Canonical authoring-page validation now lives in `figma-component-set-documentation`.
+- Use this note only when a focused authoring-page acceptance pass is needed.
