@@ -6,23 +6,71 @@ alwaysApply: true
 # Figma Component Set Presentation
 
 - This is the canonical authoring and documentation rule.
+- Never use Figma groups in final authoring output. Prefer real `FrameNode`s and auto layout in all contexts, not just documentation shells.
+- Documentation styling must be visually consistent across all component authoring shells unless the user explicitly approves an exception.
+- Reuse one canonical documentation shell recipe for every component:
+  - same shell fill treatment
+  - same shell stroke treatment
+  - same shell corner radius
+  - same shell padding
+  - same section spacing
+  - same preview surface treatment
+  - same title, section-label, and supporting-text styles
+- Treat documentation visuals as a fixed system, not a per-component design exercise.
+- Always build documentation containers with real `FrameNode`s and auto layout. Do not use groups, loose grouped layers, or manually positioned ad hoc shells as the final documentation structure.
 - After `combineAsVariants`, reflow the `ComponentSetNode` children into a readable grid. Do not leave them stacked at `0,0`.
 - Resize the `ComponentSetNode` to the furthest child bounds after reflow.
 - Wrap documented content in a real presentation shell with intentional surface treatment and enough padding to fully expose the grid.
 - Choose the shell layout model before writing:
   - `fixed-position shell` for labeled grids, aligned headers, or mixed manual sections
   - `auto-layout shell` only for truly linear documentation
+- Default documentation style contract:
+  - shell fill: `Color/Surface/Elevated`
+  - shell stroke: `color/Border`
+  - shell stroke weight: `1px`
+  - shell radius token: `radii/md`
+  - text styles: use Figma text styles appropriately by semantic role; for example, body copy must use the body text style rather than local text formatting
+  - preview surfaces: reuse one consistent fill/stroke/radius treatment for all preview cards that need contrast framing
+- If the target file already contains an approved documentation shell built from these tokens and styles, match it exactly instead of inventing a new local variation.
 - Keep labels inside the shell, use readable variant labels, and place row labels to the left for row-based layouts.
-- Default geometry unless the contract requires otherwise:
-  - shell padding `24px`
-  - row gap `16px`
-  - item gap `8px` minimum
-  - left label column `120px` minimum
-  - gap from label column to first item `16px`
+- Default spacing contract unless the component contract requires otherwise:
+  - use spacing tokens instead of arbitrary pixel values
+  - shell padding: use a spacing token equivalent to `24px`
+  - gap between major documentation sections: use a spacing token equivalent to `24px`
+  - row gap: use a spacing token equivalent to `16px`
+  - item gap: use a spacing token equivalent to `8px` minimum
+  - left label column: `120px` minimum
+  - gap from label column to first item: use a spacing token equivalent to `16px`
+  - preserve one consistent spacing rhythm across all documentation shells
+- Separate documentation containers by component level:
+  - atomic children must be documented in a separate documentation frame
+  - molecules and parent components must be documented in a separate documentation frame
+  - do not mix atomic-child documentation and molecule documentation in the same top-level documentation frame unless the user explicitly asks for that presentation
+- Preflight must explicitly record the chosen documentation style contract:
+  - shell fill token
+  - shell stroke token
+  - shell stroke weight
+  - shell radius token
+  - title text style
+  - section label text style
+  - supporting text style
+  - spacing token set used for shell and sections
+  - preview surface style
+  - whether the work belongs in an atomic documentation frame or a molecule documentation frame
 - Preserve readability for atomic child previews by choosing an intentional preview surface during preflight.
 - Before completion, validate the authoring page with both metadata and screenshot checks:
   - component-set bounds cover the laid-out variants
   - docs shell hugs measured content plus intended padding
   - top-level authoring artifacts do not overlap
   - documented child sections remain readable
+  - documentation shell styling matches the canonical presentation style used by other components
+  - typography is consistent with the approved title, section-label, and supporting-text styles
+  - spacing between sections matches the canonical documentation rhythm
+  - documentation uses frames and auto layout rather than loose grouped layers
+  - atomic-child documentation and molecule documentation are placed in separate top-level documentation frames
+- If a component is documented with ad hoc fill, stroke, spacing, or typography that breaks visual consistency with the established documentation shell system, treat the work as failed.
+- If a component uses a documentation shell radius other than `radii/md` without explicit approval, treat the work as failed.
+- If a component is documented with local text formatting where a matching text style should be used, treat the work as failed.
+- If the documentation shell uses arbitrary pixel spacing instead of the spacing-token rhythm without explicit justification, treat the work as failed.
 - If the docs shell looks correct but the underlying component set is stacked, clipped, or collapsed, treat the work as failed.
+- If the final authoring structure relies on groups where frames and auto layout should have been used, treat the work as failed.

@@ -1,0 +1,39 @@
+---
+description: Use subagents selectively for code-to-Figma component workflows
+alwaysApply: true
+---
+
+# Figma Subagent Orchestration
+
+- Apply this rule when the user asks to bring a code-backed component to the Figma canvas or update an existing Figma component from code.
+- The main agent owns orchestration, skill loading, rule enforcement, preflight synthesis, Figma write decisions, and final completion judgment.
+- Do not split the actual Figma write across multiple subagents by default. Keep the core build or upsert path centralized unless the user explicitly asks for a different execution model.
+- Use subagents selectively where specialization improves output quality:
+  - `explore` for broad code discovery, usage mining, token references, and related component searches
+  - `generalPurpose` for deeper multi-file contract research when the component API, modeling, or composition evidence is spread across many files
+  - `component-validator` for reviewer-style validation of structure, composition, documentation consistency, and QA completeness before completion
+- Default policy by component complexity:
+  - small atomic component with obvious API and no composition risk: no subagent required unless ambiguity remains
+  - molecule, parent component, or component with reusable children: require a discovery subagent or composition-audit subagent before writing
+  - tokenized, high-risk, or high-importance component: require both discovery and validation coverage before completion
+  - broad library migration or repeated component conversion work: strongly prefer subagents for discovery and validation
+- When a discovery subagent is used, require it to return:
+  - component contract summary
+  - real usage evidence
+  - variant axes
+  - optional versus required regions
+  - reusable atomic child components
+  - token and style references if relevant
+- When a composition-focused subagent is used, require it to return:
+  - code-backed children that must be reused
+  - evidence from stories, examples, or usage
+  - parent versus child responsibility split
+  - slot versus property risks
+- When a validator subagent is used, require explicit pass or fail judgments for:
+  - structure fidelity
+  - composition fidelity
+  - slot and property correctness
+  - documentation consistency
+  - authoring-page quality
+  - QA completeness
+- If the component is ambiguous enough that correct modeling depends on unresolved human intent, stop and ask the user instead of adding more subagents.
