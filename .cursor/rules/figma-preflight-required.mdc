@@ -30,6 +30,7 @@ alwaysApply: true
   - `writeBlockedUntil`
 - `documentationPlan` must include:
   - chosen shell layout model
+  - explicit confirmation that final structure will use frames and auto layout instead of groups
   - preview surface strategy for contrast-sensitive child sections
   - page-level placement map for top-level authoring artifacts
 - `qaPlan` must include:
@@ -42,3 +43,4 @@ alwaysApply: true
   - do not write when any candidate region is unclassified
   - do not write when `writeBlockedUntil` is unresolved
   - do not reduce preflight to a visual recap; explain intended usage and realistic combinations
+  - do not write if the planned final structure depends on Figma groups where frames and auto layout can be used instead

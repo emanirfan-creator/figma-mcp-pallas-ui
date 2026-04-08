@@ -27,3 +27,4 @@ alwaysApply: true
 - Hard gate:
   - if any category fails, fix it or report it as a blocker
   - do not let visual resemblance override a structural failure
+  - do not pass `QA and testing completeness` when only representative variants were checked but the supported variant/property matrix was not fully exercised

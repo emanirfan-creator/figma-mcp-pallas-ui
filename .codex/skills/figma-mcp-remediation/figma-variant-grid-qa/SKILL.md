@@ -24,6 +24,7 @@ Produce readable, review-ready component pages for any component family. This is
 - Variant groupings are labeled like a design system documentation page
 - Nothing overlaps
 - QA runs on dedicated test pages in both light and dark modes
+- QA proves the full supported variant and property matrix rather than one representative example
 
 ## Mandatory Rules
 
@@ -47,6 +48,11 @@ Produce readable, review-ready component pages for any component family. This is
    - `Light Mode Testing`
    - `Dark Mode Testing`
 13. Append QA frames instead of replacing prior QA history.
+14. When a component has variant axes, enumerate the intended QA matrix before placing instances.
+15. Do not stop at one sample instance when multiple variant combinations are part of the supported contract.
+16. For each required mode, place live QA that covers every required variant combination, unless preflight explicitly records an approved reduced matrix.
+17. When `BOOLEAN`, `TEXT`, or `INSTANCE_SWAP` properties materially change usability, include the important non-default property permutations in the QA matrix.
+18. If the supported matrix is too large for one frame, split it into multiple clearly named QA frames rather than silently reducing coverage.
 
 ## Validation Order
 
@@ -57,7 +63,9 @@ Run this sequence explicitly:
 3. resize the documentation shell to the measured content bounds plus intended padding
 4. validate top-level authoring-page spacing and non-overlap
 5. screenshot the authoring page
-6. only then proceed to light/dark testing-page QA
+6. enumerate the required variant/property QA matrix
+7. only then proceed to light/dark testing-page QA
+8. confirm every required matrix row was exercised in every required mode
 
 ## Grid Rules
 
@@ -99,6 +107,11 @@ Run this sequence explicitly:
 - Use consistent baseline Y and computed X offsets
 - Validate with screenshot after each mode frame is added
 - Require at least one screenshot of a live component instance in each required mode
+- Require live QA coverage for every supported variant combination in each required mode, unless a reduced matrix was explicitly approved during preflight
+- Treat QA planning as a matrix:
+  - variant axes across columns/rows or grouped frames
+  - important property permutations as explicit rows
+  - required modes duplicated across light and dark
 - Keep behavioral QA rows comparable across modes; do not let one row silently change size, shape, or intent between light and dark examples unless the row label explicitly calls that out.
 - Prefer readability-first behavioral QA examples in dark mode; avoid using low-contrast variants as the only proof that icon, loading, or slot behavior works.
 - If a live-instance QA row fails in a required mode, append a separate fallback QA frame only after preserving the failing proof and explicitly labeling the fallback as non-primary evidence.

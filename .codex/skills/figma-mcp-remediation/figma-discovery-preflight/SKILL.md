@@ -27,6 +27,7 @@ Produce one compact preflight brief before the first write so the build uses the
    - component purpose and intended reuse
    - smallest valid real-world instance
    - realistic usage combinations
+   - reusable code-composed children shown in stories, examples, or docs
    - stable shell
    - true variant axes
    - boolean, text, and instance-swap properties
@@ -35,7 +36,9 @@ Produce one compact preflight brief before the first write so the build uses the
    - whether designers start from the molecule or from atoms
    - whether repeated child structure needs guided composition
    - documentation shell choice
+   - confirmation that the final structure should use frames and auto layout rather than groups
    - QA scope and required modes
+   - full variant QA matrix and any required non-default property permutations
 5. Return one preflight brief before any write call.
 
 ## Required Output
@@ -61,6 +64,7 @@ Return:
 - `regionClassification`
 - `areaDecisionTable`
 - `atomicChildComponents`
+- `codeComposedChildrenUsedInExamples`
 - `localFragments`
 - `parentCompositionPlan`
 - `parentPropertyCoverage`
@@ -79,9 +83,13 @@ Return:
 - Do not skip variable/text-style discovery when the component is tokenized.
 - Do not reduce the preflight to a visual recap.
 - Do not assume the fullest example is the default component contract.
+- Do not leave the QA scope at the level of "one example per mode" when the component exposes multiple supported variant combinations or important non-default property states.
 - Do not leave `ambiguitiesRequiringHumanDecision` implicit.
 - Do not leave any candidate region unclassified.
+- Do not plan to rely on Figma groups in the final structure when frames and auto layout can express the same layout.
 - If a reusable visual child is ambiguous, stop and ask before writing.
+- If code examples compose the parent with a reusable child and the write plan does not reuse or upsert that child first, block the write.
+- If MCP or Plugin API limits force a baked replacement for a reusable child, mark `askBeforeWrite` or `writeBlockedUntil` instead of silently treating the fallback as complete.
 - If the right representation remains unclear, set `askBeforeWrite` and use `AskQuestion`.
 
 ## Notes
@@ -119,6 +127,8 @@ areaDecisionTable:
   - "| Area | Decision | Reason |"
 atomicChildComponents:
   - TabTrigger
+codeComposedChildrenUsedInExamples:
+  - Trigger uses Button in docs examples and must reuse the Button atom or an approved swap contract
 localFragments: []
 parentPropertyCoverage:
   label:
@@ -126,6 +136,7 @@ parentPropertyCoverage:
     text: Label
 documentationPlan:
   shellLayout: fixed-position shell
+  structurePolicy: Use frames and auto layout for final structure; no groups
   previewSurfaceStrategy: Neutral surface for contrast-safe trigger previews
   pagePlacementMap:
     - docs shell
@@ -134,6 +145,11 @@ documentationPlan:
 qaPlan:
   liveInstanceChecks:
     - selected vs unselected trigger
+  variantMatrix:
+    - size=sm, state=default
+    - size=sm, state=disabled
+  requiredPropertyPermutations:
+    - showIcon=true
   requiredModes:
     - light
     - dark

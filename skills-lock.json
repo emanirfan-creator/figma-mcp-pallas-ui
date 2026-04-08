@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "skills": {
+    "design-audit": {
+      "source": "bencium/bencium-marketplace",
+      "sourceType": "github",
+      "computedHash": "18044a5dfff442f951c5fcead39da4ebd84096cca39e3cb848e677d84938faef"
+    },
+    "ui-audit": {
+      "source": "tommygeoco/ui-audit",
+      "sourceType": "github",
+      "computedHash": "a47ac5842ee16bd2b83a248f360d56b5b63724da1496de4bd2f0d5e58721907a"
+    }
+  }
+}

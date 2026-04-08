@@ -6,26 +6,34 @@ alwaysApply: true
 # Figma Slot Composition Hard Gate
 
 - This is the canonical composition rule for reusable child components and code-backed parent assembly.
+- When the user asks to make a component, first decide whether the target is a true atomic component or a molecule/parent assembled from reusable children.
+- If the target is a true atomic component, build or upsert that atomic component directly.
 - Before building the parent, inspect the code contract and identify:
   - the parent or molecule component
   - atomic child components
   - reusable visual slots such as `icon`, `spinner`, `avatar`, `badge`, `trigger`, or `item`
   - local fragments with no reusable contract
 - Treat reusable visual props as `atomic-child-component` by default unless the code clearly proves they are local fragments.
+- Do not use Figma groups as the final composition structure. Prefer frames and auto layout for parent assembly, child containers, and documentation scaffolding.
 - Build order:
   1. audit reusable children in code
   2. audit matching children in Figma
   3. reuse matching children when they satisfy the contract
   4. create or upsert missing or stale children first
   5. compose the parent from those child instances or instance-swap contracts
+- If stories, docs, or real usage examples compose the parent with a known reusable code-backed child such as `Button`, `Icon`, `Avatar`, `Badge`, or `Trigger`, treat that child as required reuse evidence by default.
+- Do not replace a code-composed reusable child with a visually similar local frame just because the parent write path is blocked or inconvenient.
 - Keep true child axes on the child and true parent axes on the parent.
 - Add required parent properties before `combineAsVariants`.
 - Prefer `INSTANCE_SWAP` when the parent contract is swap-driven; prefer child instances when the nested piece has its own reusable contract.
 - Do not ship loose vectors, ad hoc frames, or baked copies when the code contract implies a reusable child.
+- Do not ship grouped wrappers as a shortcut for layout; convert them to frames with intentional sizing and auto-layout behavior.
 - If the parent is already combined and the correct child/property model cannot be added safely, rebuild the parent rather than patching around it.
+- If MCP or Plugin API limitations prevent correct child reuse, stop and report the component as incomplete instead of silently finishing with baked child replacements.
 - Preflight must explicitly record:
   - `codeAtomicChildrenFound`
   - `existingFigmaAtomicChildren`
   - `atomicChildrenToCreateFirst`
   - `atomicChildrenToReuse`
   - `parentBuiltFrom`
+  - `codeComposedChildrenUsedInExamples`

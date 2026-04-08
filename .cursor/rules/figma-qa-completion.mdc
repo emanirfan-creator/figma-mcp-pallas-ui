@@ -11,6 +11,9 @@ alwaysApply: true
 - Keep QA artifacts on testing pages, not authoring pages, and append new QA frames instead of replacing history.
 - For tokenized components, require structural validation, screenshot validation, and semantic token validation before completion.
 - For multi-mode work, require at least one screenshot of a live component instance in every required mode.
+- For any component with variant axes, required QA must cover every intended variant combination unless preflight explicitly records a smaller approved matrix and explains why the omitted combinations are not part of the supported contract.
+- Do not treat one representative instance as sufficient proof when the component exposes multiple variants, sizes, states, layouts, or other user-selectable axes.
+- When the component also exposes `BOOLEAN`, `TEXT`, or `INSTANCE_SWAP` properties that materially affect usability, required QA must include the important property permutations called out in preflight, not only the default property state.
 - Do not treat detached, manually restyled, or fallback artifacts as primary proof for mode correctness.
 - If dark-mode readability depends on placeholder, secondary, tertiary, disabled text, or slot-backed visuals, verify those semantics on live instances before completion.
 - If live-instance QA fails in any required mode, completion is blocked unless:
@@ -19,4 +22,6 @@ alwaysApply: true
 - Before finishing, confirm:
   - authoring-page checks passed
   - testing-page QA exists for all required modes
+  - every required variant combination was exercised on live instances in every required mode
+  - every required non-default property permutation was exercised on live instances in every required mode
   - no mandatory QA step remains unresolved
