@@ -11,6 +11,8 @@ description: Enforces deterministic upsert/deduplication when creating or updati
 - You need deterministic idempotency: explicit naming and "modify existing first".
 - You want to ensure the agent does not place QA/test artifacts on the component's authoring root page.
 
+Treat this as a targeted remediation overlay when rerun safety or existing-family refreshes are the real risk. Do not load it by default when standard implementation is already idempotent enough.
+
 Load this skill together with `figma-use` and (when relevant) `figma-generate-library`.
 
 ## Goal

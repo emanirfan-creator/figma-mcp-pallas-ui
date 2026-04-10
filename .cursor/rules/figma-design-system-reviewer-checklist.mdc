@@ -1,13 +1,14 @@
 ---
 description: Review authored Figma components for design-system quality, not just visual similarity
-alwaysApply: true
+alwaysApply: false
 ---
 
 # Figma Design-System Reviewer Checklist
 
 - Apply this rule for Figma component-library, component-canvas, and design-system component work.
-- Run a reviewer-style checklist before marking the component complete.
+- Use this as a final review index, not as a second policy source.
 - Treat this as a design-system quality pass, not a screenshot-fidelity pass.
+- Resolve failures by following the canonical rules named below.
 
 - Review these categories as explicit pass/fail judgments:
   - `Structure fidelity`
@@ -27,4 +28,3 @@ alwaysApply: true
 - Hard gate:
   - if any category fails, fix it or report it as a blocker
   - do not let visual resemblance override a structural failure
-  - do not pass `QA and testing completeness` when only representative variants were checked but the supported variant/property matrix was not fully exercised

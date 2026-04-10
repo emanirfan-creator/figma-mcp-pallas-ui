@@ -1,9 +1,0 @@
----
-description: Model Figma components from real usage patterns before visual assembly
-alwaysApply: false
----
-
-# Figma Usage-First Modeling
-
-- Canonical usage and property-modeling policy now lives in `figma-content-slot-detection`.
-- Use this note only as a reminder to derive structure from realistic usage combinations rather than the maximal example.

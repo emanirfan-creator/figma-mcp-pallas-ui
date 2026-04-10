@@ -7,6 +7,8 @@ description: Supplemental enforcement pass for preflight contract quality. Use o
 
 Load only after `figma-discovery-preflight` when the initial brief still has meaningful ambiguity.
 
+This is an escalation-only delta pass. Do not use it as the default contract stage when `figma-discovery-preflight` already produced a sufficient brief.
+
 ## Goal
 
 Pressure-test the existing preflight brief instead of producing a second full contract from scratch.

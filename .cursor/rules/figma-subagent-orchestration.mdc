@@ -6,34 +6,39 @@ alwaysApply: true
 # Figma Subagent Orchestration
 
 - Apply this rule when the user asks to bring a code-backed component to the Figma canvas or update an existing Figma component from code.
-- The main agent owns orchestration, skill loading, rule enforcement, preflight synthesis, Figma write decisions, and final completion judgment.
-- Do not split the actual Figma write across multiple subagents by default. Keep the core build or upsert path centralized unless the user explicitly asks for a different execution model.
-- Use subagents selectively where specialization improves output quality:
-  - `explore` for broad code discovery, usage mining, token references, and related component searches
-  - `generalPurpose` for deeper multi-file contract research when the component API, modeling, or composition evidence is spread across many files
-  - `component-validator` for reviewer-style validation of structure, composition, documentation consistency, and QA completeness before completion
-- Default policy by component complexity:
-  - small atomic component with obvious API and no composition risk: no subagent required unless ambiguity remains
-  - molecule, parent component, or component with reusable children: require a discovery subagent or composition-audit subagent before writing
-  - tokenized, high-risk, or high-importance component: require both discovery and validation coverage before completion
-  - broad library migration or repeated component conversion work: strongly prefer subagents for discovery and validation
-- When a discovery subagent is used, require it to return:
-  - component contract summary
-  - real usage evidence
-  - variant axes
-  - optional versus required regions
-  - reusable atomic child components
-  - token and style references if relevant
-- When a composition-focused subagent is used, require it to return:
-  - code-backed children that must be reused
-  - evidence from stories, examples, or usage
-  - parent versus child responsibility split
-  - slot versus property risks
-- When a validator subagent is used, require explicit pass or fail judgments for:
-  - structure fidelity
-  - composition fidelity
-  - slot and property correctness
-  - documentation consistency
-  - authoring-page quality
-  - QA completeness
+- The main agent owns orchestration and chooses the lightest safe workflow for the request.
+- Use the full workflow when any of the following are true:
+  - creating a new component
+  - changing composition model
+  - introducing or reworking reusable child components
+  - token reconciliation is nontrivial
+  - dark mode or the full QA matrix materially matters
+- Use the fast workflow only when all of the following are true:
+  - updating an existing component
+  - the code contract is already obvious
+  - no slot or property ambiguity exists
+  - no new child reuse decisions are needed
+- Full workflow:
+  1. `figma-code-contract`
+  2. `figma-preflight`
+  3. `figma-execution-planner`
+  4. human approval
+  5. `figma-implementation`
+  6. `component-validator`
+- Fast workflow:
+  1. `figma-code-contract`
+  2. `figma-preflight`
+  3. compact planning in the main agent or a minimal `figma-execution-planner` pass
+  4. `figma-implementation`
+  5. targeted `component-validator` only when implementation reports risk, token substitution, dark-mode uncertainty, or QA ambiguity
+- Responsibility boundaries:
+  - `figma-code-contract`: code-only discovery
+  - `figma-preflight`: Figma-context discovery and preflight, always using `docs/pallas-ui-component-mapping.md`, and owns the Figma inventory snapshot for the run
+  - `figma-execution-planner`: approval-stage execution plan and downstream implementation handoff when full planning is required
+  - `figma-implementation`: write path only, reusing the upstream inventory snapshot unless it is stale or contradicted
+  - `component-validator`: report-only QA; if QA fails, return work to implementation
+- Do not add extra discovery or implementation subagents unless the user asks or a blocker clearly requires escalation.
+- Do not split the write path across multiple implementation subagents by default.
+- `explore` and `generalPurpose` remain optional escalation tools for broad unknowns, not the default workflow.
+- Cache Figma inventory between stages. Reuse existing pages, candidate component families, variable collections, and text styles from preflight instead of rediscovering them at each downstream step unless staleness or contradictory file state requires a refresh.
 - If the component is ambiguous enough that correct modeling depends on unresolved human intent, stop and ask the user instead of adding more subagents.

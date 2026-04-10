@@ -7,6 +7,8 @@ description: Encodes safe Figma Plugin API patterns for component-library writes
 
 Load with `figma-use` before emitting `use_figma` code for component-library writes.
 
+Canonical policy for these constraints lives in `figma-api-safety`. This skill adds write-phase implementation patterns and return fields only.
+
 ## Goal
 
 Prevent avoidable Figma API failures by using known-safe patterns for variable binding, component properties, and rerun-safe updates.

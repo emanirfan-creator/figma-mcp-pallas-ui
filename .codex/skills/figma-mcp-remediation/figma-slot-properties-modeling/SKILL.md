@@ -7,6 +7,8 @@ description: Supplemental write-phase enforcement for properties, slot decisions
 
 Load after `figma-discovery-preflight` when extra write-phase enforcement is needed.
 
+This is an escalation-only overlay. Canonical modeling policy lives in `figma-content-slot-detection` and `figma-slot-composition-hard-gate`.
+
 ## When to use
 - The agent makes icon/text variants by splitting them into separate component families instead of using boolean/text/instance-swap properties.
 - A true content region such as modal body, content area, or footer is being flattened into fixed parent structure.

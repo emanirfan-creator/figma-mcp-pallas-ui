@@ -9,9 +9,10 @@ This map links common issues to the smallest useful remediation layer.
 | Code token names do not match Figma token names | `figma-token-reconciliation` |
 | A token substitute may be semantically unsafe | `figma-token-reconciliation` |
 | Light/dark token parity must be verified | `figma-token-reconciliation`, `figma-variant-grid-qa`, `figma-dark-mode-semantic-qa` |
-| Need a deterministic code-to-Figma contract before the first write | `figma-component-contract-extraction` |
-| Need to decide between variants, properties, and documented examples | `figma-component-library-remediation`, `figma-slot-properties-modeling`, `figma-variant-grid-qa` |
-| Need to choose between a fixed-position docs shell and an auto-layout shell | `figma-component-contract-extraction`, `figma-variant-grid-qa` |
+| Need a deterministic code-to-Figma contract before the first write | `figma-discovery-preflight` |
+| Preflight exists but representation or parent-property decisions still feel ambiguous | `figma-component-contract-extraction` |
+| Need to decide between variants, properties, and documented examples | `figma-discovery-preflight`, `figma-slot-properties-modeling`, `figma-variant-grid-qa` |
+| Need to choose between a fixed-position docs shell and an auto-layout shell | `figma-discovery-preflight`, `figma-variant-grid-qa` |
 | Variable binding or property wiring causes Figma API failures | `figma-api-safe-patterns` |
 | Components are shape-only or missing text/effect styles | `figma-token-style-bindings` |
 | Icon/text behavior should be modeled with component properties | `figma-slot-properties-modeling` |
@@ -39,12 +40,31 @@ Rules should prevent these by default:
 - Do not treat loose page content as completed documentation when a presentation shell/frame is expected.
 - Do not flatten reusable slot-backed visuals into loose vectors when the code contract implies a child component.
 
+## Default Vs Escalation
+
+Default implementation overlays:
+
+- `figma-discovery-preflight`
+- `figma-token-reconciliation`
+- `figma-token-style-bindings`
+- `figma-api-safe-patterns`
+- `figma-variant-grid-qa`
+
+Escalation-only overlays:
+
+- `figma-component-contract-extraction`
+- `figma-component-upsert`
+- `figma-slot-properties-modeling`
+- `figma-dark-mode-semantic-qa`
+- `figma-single-pass-complete`
+
 ## Subagent-Owned Audits
 
 Subagents are best for:
 
-- discovery brief across code and Figma
-- component contract extraction
+- code contract discovery across the codebase
+- Figma preflight across the target file and related component families
+- approval-stage execution planning
 - semantic QA against recipe intent and token behavior
 - dark-mode semantic QA on live instances and fallback artifacts
 - identifying which nested visuals are true child components versus local layout fragments
